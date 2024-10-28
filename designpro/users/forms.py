@@ -4,6 +4,36 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
 import re
+from .models import DesignRequest
+from .models import Category
+
+
+class DesignRequestForm(forms.ModelForm):
+    class Meta:
+        model = DesignRequest
+        fields = ['title', 'description', 'category', 'image']
+        widgets = {
+            'title': forms.TextInput(attrs={'placeholder': 'Введите название'}),
+            'description': forms.Textarea(attrs={'placeholder': 'Введите описание', 'rows': 4}),
+        }
+
+    def clean_image(self):
+        image = self.cleaned_data.get('image')
+        if image:
+            if image.size > 2 * 1024 * 1024:  # Проверка на максимальный размер файла (2Мб)
+                raise forms.ValidationError('Максимальный размер изображения — 2Мб.')
+        return image
+
+
+
+class CategoryForm(forms.ModelForm):
+    class Meta:
+        model = Category
+        fields = ['name']
+        widgets = {
+            'name': forms.TextInput(attrs={'placeholder': 'Введите название категории'}),
+        }
+
 
 class CustomUserCreationForm(UserCreationForm):
     full_name = forms.CharField(
