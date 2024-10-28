@@ -11,32 +11,18 @@
     </select>
     <button type="submit">Фильтровать</button>
 </form>
-<table>
-    <thead>
-        <tr>
-            <th>Временная метка</th>
-            <th>Название</th>
-            <th>Описание</th>
-            <th>Категория</th>
-            <th>Статус</th>
-            <th>Действие</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for request in requests %}
-        <tr>
-            <td>{{ request.created_at }}</td>
-            <td>{{ request.title }}</td>
-            <td>{{ request.description }}</td>
-            <td>{{ request.category }}</td>
-            <td>{{ request.status }}</td>
-            <td>
-                {% if request.status == 'Новая' %}
-                <a href="{% url 'delete_request' request.pk %}">Удалить</a>
-                {% endif %}
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+<div class="requests-list">
+    {% for request in requests %}
+    <div class="request-card">
+        <p><strong>Дата создания:</strong> {{ request.created_at }}</p>
+        <p><strong>Название:</strong> {{ request.title }}</p>
+        <p><strong>Описание:</strong> {{ request.description }}</p>
+        <p><strong>Категория:</strong> {{ request.category }}</p>
+        <p><strong>Статус:</strong> {{ request.status }}</p>
+        {% if request.status == 'Новая' or user.is_superuser %}
+        <a href="{% url 'delete_request' request.pk %}">Удалить</a>
+        {% endif %}
+    </div>
+    {% endfor %}
+</div>
 {% endblock %}

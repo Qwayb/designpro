@@ -15,15 +15,22 @@ class DesignRequestForm(forms.ModelForm):
         widgets = {
             'title': forms.TextInput(attrs={'placeholder': 'Введите название'}),
             'description': forms.Textarea(attrs={'placeholder': 'Введите описание', 'rows': 4}),
+            'category': forms.Select(attrs={'placeholder': 'Выберите категорию'}),
+            'image': forms.ClearableFileInput(attrs={'placeholder': 'Загрузите изображение'}),
+        }
+        labels = {
+            'title': 'Название',
+            'description': 'Описание',
+            'category': 'Категория',
+            'image': '',
         }
 
     def clean_image(self):
         image = self.cleaned_data.get('image')
         if image:
-            if image.size > 2 * 1024 * 1024:  # Проверка на максимальный размер файла (2Мб)
+            if image.size > 2 * 1024 * 1024:
                 raise forms.ValidationError('Максимальный размер изображения — 2Мб.')
         return image
-
 
 
 class CategoryForm(forms.ModelForm):
@@ -32,6 +39,9 @@ class CategoryForm(forms.ModelForm):
         fields = ['name']
         widgets = {
             'name': forms.TextInput(attrs={'placeholder': 'Введите название категории'}),
+        }
+        labels = {
+            'name': 'Название',
         }
 
 

@@ -28,7 +28,10 @@ def create_design_request(request):
 
 @login_required
 def view_requests(request):
-    requests = DesignRequest.objects.filter(user=request.user).order_by('-created_at')
+    if request.user.is_superuser:
+        requests = DesignRequest.objects.all().order_by('-created_at')
+    else:
+        requests = DesignRequest.objects.filter(user=request.user).order_by('-created_at')
     status_filter = request.GET.get('status')
     if status_filter:
         requests = requests.filter(status=status_filter)
@@ -40,12 +43,12 @@ def view_requests(request):
 
 @login_required
 def delete_request(request, pk):
-    design_request = get_object_or_404(DesignRequest, pk=pk, user=request.user, status='Новая')
+    design_request = get_object_or_404(DesignRequest, pk=pk, status='Новая')
     if request.method == 'POST':
         design_request.delete()
         messages.success(request, 'Заявка успешно удалена.')
         return redirect('view_requests')
-    return render(request, 'confirm_delete.html', {'design_request': design_request})
+    return render(request, 'confirm_delete_request.html', {'design_request': design_request})
 
 
 @user_passes_test(lambda u: u.is_superuser)

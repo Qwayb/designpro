@@ -3,7 +3,31 @@
 <h2>Создание заявки</h2>
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    {{ form.as_p }}
+    <p>
+        {{ form.title.label_tag }} <br>
+        {{ form.title }}
+    </p>
+    <p>
+        {{ form.description.label_tag }} <br>
+        {{ form.description }}
+    </p>
+    <p>
+        {{ form.category.label_tag }} <br>
+        {{ form.category }}
+    </p>
+    <p>
+        {{ form.image.label_tag }} <br>
+        <label for="file-upload" class="custom-file-upload">
+            Выберите файл
+        </label>
+        <input id="file-upload" type="file" name="{{ form.image.html_name }}">
+        <span id="file-name">Файл не выбран</span>
+    </p>
     <button type="submit">Создать заявку</button>
 </form>
+<script>
+    document.getElementById("file-upload").onchange = function() {
+        document.getElementById("file-name").textContent = this.files[0] ? this.files[0].name : "Файл не выбран";
+    };
+</script>
 {% endblock %}

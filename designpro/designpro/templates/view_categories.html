@@ -1,22 +1,12 @@
 {% extends 'base.html' %}
 {% block content %}
 <h2>Категории</h2>
-<table>
-    <thead>
-        <tr>
-            <th>Название</th>
-            <th>Действие</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for category in categories %}
-        <tr>
-            <td>{{ category.name }}</td>
-            <td>
-                <a href="{% url 'delete_category' category.pk %}">Удалить</a>
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+<div class="categories-list">
+    {% for category in categories %}
+    <div class="category-card">
+        <p>{{ category.name }}</p>
+        <a href="{% url 'delete_category' category.pk %}">Удалить</a>
+    </div>
+    {% endfor %}
+</div>
 {% endblock %}
