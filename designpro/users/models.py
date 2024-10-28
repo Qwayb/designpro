@@ -15,6 +15,10 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+    def delete(self, *args, **kwargs):
+        DesignRequest.objects.filter(category=self).delete()
+        super().delete(*args, **kwargs)
+
 class DesignRequest(models.Model):
     STATUS_CHOICES = (
         ('Новая', 'Новая'),
@@ -31,6 +35,10 @@ class DesignRequest(models.Model):
     ], verbose_name='Изображение')
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='Новая', verbose_name='Статус')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
+    design_image = models.ImageField(upload_to='designs/', validators=[
+        FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'png', 'bmp'])
+    ], null=True, blank=True, verbose_name='Изображение дизайна')
+    comment = models.TextField(null=True, blank=True, verbose_name='Комментарий')
 
     def __str__(self):
         return self.title

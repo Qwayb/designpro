@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Изменение статуса заявки</h2>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Обновить статус</button>
+    <a href="{% url 'view_requests' %}"><button type="button">Отмена</button></a>
+</form>
+{% endblock %}

@@ -104,3 +104,32 @@ class CustomUserCreationForm(UserCreationForm):
             error_messages = [str(err) for err in e.messages]
             raise ValidationError(error_messages)
         return password
+
+
+class UpdateStatusForm(forms.ModelForm):
+    class Meta:
+        model = DesignRequest
+        fields = ['status', 'design_image', 'comment']
+        labels = {
+            'status': 'Статус заявки',
+            'design_image': 'Изображение дизайна (обязательно для статуса "Выполнено")',
+            'comment': 'Комментарий (обязательно для статуса "Принято в работу")',
+        }
+        widgets = {
+            'design_image': forms.FileInput(attrs={'id': 'file-upload', 'class': 'file-input'}),
+        }
+
+    def clean(self):
+        cleaned_data = super().clean()
+        status = cleaned_data.get('status')
+        design_image = cleaned_data.get('design_image')
+        comment = cleaned_data.get('comment')
+
+        if status == 'Выполнено' and not design_image:
+            raise forms.ValidationError('Для изменения статуса на "Выполнено" необходимо добавить изображение дизайна.')
+        if status == 'Принято в работу' and not comment:
+            raise forms.ValidationError('Для изменения статуса на "Принято в работу" необходимо добавить комментарий.')
+        if status == 'Новая':
+            raise forms.ValidationError('Нельзя изменить статус обратно на "Новая".')
+
+        return cleaned_data
