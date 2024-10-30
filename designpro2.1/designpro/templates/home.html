@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        <h2>Добро пожаловать, {{ user.username }}!</h2>
+    {% else %}
+        <h2>Добро пожаловать в DesignPro!</h2>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,23 @@
+<!-- designpro/templates/register.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Регистрация</h2>
+<form method="post">
+    {% csrf_token %}
+    {% for field in form %}
+        <div class="form-group">
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field }}
+            {% if field.errors %}
+                <div class="form-error" style="color: #e74c3c; font-size: 14px;">
+                    {% for error in field.errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    {% endfor %}
+    <button type="submit">Зарегистрироваться</button>
+</form>
+{% endblock %}
