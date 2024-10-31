@@ -26,5 +26,9 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
 ]
 
+urlpatterns += [
+    path('captcha/', include('captcha.urls')),
+]
+
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS[0])

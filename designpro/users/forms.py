@@ -1,3 +1,4 @@
+from captcha.fields import CaptchaField
 from django.contrib.auth.password_validation import validate_password
 from django import forms
 from django.contrib.auth.models import User
@@ -61,6 +62,8 @@ class CustomUserCreationForm(UserCreationForm):
         label='Согласие на обработку персональных данных',
         required=True
     )
+
+    captcha = CaptchaField()
 
     class Meta:
         model = User

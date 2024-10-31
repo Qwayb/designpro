@@ -27,6 +27,12 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+CAPTCHA_LENGTH = 5
+CAPTCHA_CHALLENGE_FUNCT = 'designpro.captchaSettings.captchasymbols'
+CAPTCHA_FONT_PATH = os.path.join(BASE_DIR, 'designpro/static/fonts/Arimo-VariableFont_wght.ttf')
+CAPTCHA_FONT_SIZE = 40
+CAPTCHA_IMAGE_SIZE = (200, 50)
+CAPTCHA_LETTER_ROTATION = (-10, 10)
 
 # Application definition
 
@@ -38,6 +44,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'users',
+    'captcha',
+    'designpro',
 ]
 
 MIDDLEWARE = [

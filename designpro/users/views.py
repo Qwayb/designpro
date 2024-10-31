@@ -71,3 +71,5 @@ class CustomLoginView(LoginView):
 @login_required
 def profile(request):
     return render(request, 'profile.html')
+
+
