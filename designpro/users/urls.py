@@ -10,8 +10,5 @@ urlpatterns = [
     path('create_request/', views.create_design_request, name='create_request'),
     path('view_requests/', views.view_requests, name='view_requests'),
     path('delete_request/<int:pk>/', views.delete_request, name='delete_request'),
-    path('create_category/', views.create_category, name='create_category'),
-    path('view_categories/', views.view_categories, name='view_categories'),
-    path('delete_category/<int:pk>/', views.delete_category, name='delete_category'),
     path('profile/', views.profile, name='profile'),
 ]

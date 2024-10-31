@@ -50,45 +50,8 @@ def delete_request(request, pk):
         return redirect('view_requests')
     return render(request, 'confirm_delete_request.html', {'design_request': design_request})
 
-
-@user_passes_test(lambda u: u.is_superuser)
-@login_required
-def create_category(request):
-    if request.method == 'POST':
-        form = CategoryForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Категория успешно создана!')
-            return redirect('home')
-    else:
-        form = CategoryForm()
-    return render(request, 'create_category.html', {'form': form})
-
-
-
-@user_passes_test(lambda u: u.is_superuser)
-@login_required
-def view_categories(request):
-    categories = Category.objects.all()
-    return render(request, 'view_categories.html', {'categories': categories})
-
-@user_passes_test(lambda u: u.is_superuser)
-@login_required
-def delete_category(request, pk):
-    category = get_object_or_404(Category, pk=pk)
-    if request.method == 'POST':
-        category.delete()
-        messages.success(request, 'Категория успешно удалена.')
-        return redirect('view_categories')
-    return render(request, 'confirm_delete_category.html', {'category': category})
-
-
-
-
-
 def home(request):
     return render(request, 'home.html')
-
 
 def register(request):
     form = CustomUserCreationForm()
