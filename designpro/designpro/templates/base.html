@@ -13,7 +13,7 @@
             <a class="nav__name" href="{% url 'home' %}">DesignPro</a>
             <ul>
                 {% if user.is_authenticated %}
-                    <li><a href="{% url 'home' %}">{{ user.username }}</a></li>
+                    <li><a href="{% url 'profile' %}">{{ user.username }}</a></li>
                     <li><a href="{% url 'logout' %}">Выход</a></li>
                 {% else %}
                     <li><a href="{% url 'login' %}">Вход</a></li>
