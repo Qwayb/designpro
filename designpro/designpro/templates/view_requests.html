@@ -23,12 +23,10 @@
             {% if request.status == 'Принято в работу' %}
                 <a href="{% url 'update_request_status' request.pk %}">Изменить статус</a>
                 <a href="{% url 'delete_request' request.pk %}">Удалить</a>
-            {% endif %}
-            {% if request.status == 'Новая' %}
+            {% elif request.status == 'Новая' %}
                 <a href="{% url 'update_request_status' request.pk %}">Изменить статус</a>
                 <a href="{% url 'delete_request' request.pk %}">Удалить</a>
-            {% endif %}
-            {% if request.status == 'Выполнено' %}
+            {% else %}
                 <p>Заявка выполнена, изменть нельзя</p>
             {% endif %}
         {% endif %}
