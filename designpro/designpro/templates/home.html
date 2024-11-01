@@ -1,5 +1,24 @@
 {% extends 'base.html' %}
 
 {% block content %}
-        <h2 class="welcome">Добро пожаловать в DesignPro!</h2>
+
+    <h2>Добро пожаловать в DesignPro</h2>
+
+    <h3>Последние выполненные заявки</h3>
+    <div class="recent-requests">
+        {% for request in recent_completed_requests %}
+            <div class="request-item">
+                <p>Название: {{ request.title }}</p>
+                <p>Категория: {{ request.category }}</p>
+                <img src="{{ request.design_image.url }}" alt="Дизайн" class="design-image">
+                <p>Дата добавления: {{ request.created_at }}</p>
+            </div>
+        {% empty %}
+            <p>Нет выполненных заявок.</p>
+        {% endfor %}
+    </div>
+
+    <h3>Количество заявок в статусе «Принято в работу»</h3>
+    <p>{{ in_progress_count }}</p>
+
 {% endblock %}

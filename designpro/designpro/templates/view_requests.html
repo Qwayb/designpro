@@ -19,6 +19,9 @@
         <p><strong>Описание:</strong> {{ request.description }}</p>
         <p><strong>Категория:</strong> {{ request.category }}</p>
         <p><strong>Статус:</strong> {{ request.status }}</p>
+        {% if user.is_superuser %}
+        <a href="{% url 'update_request_status' request.pk %}">Изменить статус</a>
+        {% endif %}
         {% if request.status == 'Новая' or user.is_superuser %}
         <a href="{% url 'delete_request' request.pk %}">Удалить</a>
         {% endif %}
