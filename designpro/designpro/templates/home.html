@@ -10,7 +10,8 @@
             <div class="request-item">
                 <p>Название: {{ request.title }}</p>
                 <p>Категория: {{ request.category }}</p>
-                <img src="{{ request.design_image.url }}" alt="Дизайн" class="design-image">
+                <img src="{{ request.image.url }}" alt="design" class="design-image">
+                <img src="{{ request.design_image.url }}" alt="updateDesign" class="design-image">
                 <p>Дата добавления: {{ request.created_at }}</p>
             </div>
         {% empty %}

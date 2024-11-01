@@ -117,7 +117,23 @@ class UpdateStatusForm(forms.ModelForm):
         }
         widgets = {
             'design_image': forms.FileInput(attrs={'id': 'file-upload', 'class': 'file-input'}),
+            'comment': forms.Textarea(attrs={'placeholder': 'Введите комментарий', 'rows': 3}),
         }
+
+    def clean(self):
+        cleaned_data = super().clean()
+        status = cleaned_data.get('status')
+        design_image = cleaned_data.get('design_image')
+        comment = cleaned_data.get('comment')
+
+        if status == 'Выполнено' and not design_image:
+            raise forms.ValidationError('Для изменения статуса на "Выполнено" необходимо добавить изображение дизайна.')
+        if status == 'Принято в работу' and not comment:
+            raise forms.ValidationError('Для изменения статуса на "Принято в работу" необходимо добавить комментарий.')
+
+        return cleaned_data
+
+
 
     def clean(self):
         cleaned_data = super().clean()

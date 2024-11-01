@@ -1,14 +1,16 @@
 {% extends 'base.html' %}
 {% block content %}
         <div class="buttons">
-            <div class="user-buttons">
             <h2 class="welcome">Добро пожаловать, {{ user.username }}!</h2>
-            <a href="{% url 'create_request' %}"><button>Создать заявку</button></a>
-            <a href="{% url 'view_requests' %}"><button>Посмотреть все заявки</button></a>
+            {% if not user.is_superuser %}
+            <div class="user-buttons">
+                <a href="{% url 'create_request' %}"><button>Создать заявку</button></a>
+                <a href="{% url 'view_requests' %}"><button>Посмотреть все заявки</button></a>
             </div>
-            {% if user.is_superuser %}
-            <a href="{% url 'create_category' %}"><button>Создать категорию</button></a>
-            <a href="{% url 'view_categories' %}"><button>Посмотреть все категории</button></a>
+            {% else %}
+                <a href="{% url 'view_requests' %}"><button>Посмотреть все заявки</button></a>
+                <a href="{% url 'create_category' %}"><button>Создать категорию</button></a>
+                <a href="{% url 'view_categories' %}"><button>Посмотреть все категории</button></a>
         </div>
         {% endif %}
 {% endblock %}

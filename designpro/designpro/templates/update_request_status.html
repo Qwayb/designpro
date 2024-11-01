@@ -1,10 +1,49 @@
 {% extends 'base.html' %}
+
 {% block content %}
 <h2>Изменение статуса заявки</h2>
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    {{ form.as_p }}
+    {{ form.status.label_tag }}<br>
+    {{ form.status }}
+
+    <div id="image-field" style="display: none;">
+        {{ form.design_image.label_tag }}<br>
+        <label for="file-upload" class="custom-file-upload">
+            Выберите файл
+        </label>
+        {{ form.design_image }}
+    </div>
+
+    <div id="comment-field" style="display: none;">
+        {{ form.comment.label_tag }}<br>
+        {{ form.comment }}
+    </div>
+
     <button type="submit">Обновить статус</button>
-    <a href="{% url 'view_requests' %}"><button type="button">Отмена</button></a>
 </form>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const statusField = document.getElementById("id_status");
+        const imageField = document.getElementById("image-field");
+        const commentField = document.getElementById("comment-field");
+
+        function toggleFields() {
+            if (statusField.value === "Выполнено") {
+                imageField.style.display = "block";
+                commentField.style.display = "none";
+            } else if (statusField.value === "Принято в работу") {
+                imageField.style.display = "none";
+                commentField.style.display = "block";
+            } else {
+                imageField.style.display = "none";
+                commentField.style.display = "none";
+            }
+        }
+
+        statusField.addEventListener("change", toggleFields);
+        toggleFields();  // Call it initially to set the correct visibility
+    });
+</script>
 {% endblock %}
